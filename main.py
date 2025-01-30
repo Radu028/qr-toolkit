@@ -14,13 +14,13 @@ _, binary_img = cv2.threshold(img, 127, 255, cv2.THRESH_BINARY)
 module_size = None
 
 # Search for Finder Pattern and get module size
-finder_patterns = []
+finder_patterns_coords = []
 for i in range(height):
     for j in range(width):
         if binary_img[i, j] == 0 and binary_img[i, j + 1] == 0:
             for k in range(width - j):
                 if binary_img[i, j + k + 1] == 255: # Assume that the first row of black pixels is the finder pattern
-                    finder_patterns.append((i, j)) # Save only the starting point (top-left)
+                    finder_patterns_coords.append((i, j)) # Save only the starting point (top-left)
                     module_size = (k + 1) // 7
                     break
             if module_size:
@@ -29,19 +29,35 @@ for i in range(height):
         break
 
 # Search for the second Finder Pattern
-for i in range(finder_patterns[0][0], height):
-    for j in range(finder_patterns[0][1] + 7 * module_size, width):
+for i in range(finder_patterns_coords[0][0], height):
+    for j in range(finder_patterns_coords[0][1] + 7 * module_size, width):
         # Check if the pixels from (i, j) to (i + 6 * module_size, j) and (i, j) to (i, j + 6 * module_size) are black
         for k in range(6 * module_size):
             if binary_img[i + k, j] == 255 or binary_img[i, j + k] == 255:
                 break
         else:
-            finder_patterns.append((i, j))
+            finder_patterns_coords.append((i, j))
             break
-    if len(finder_patterns) == 2:
+    if len(finder_patterns_coords) == 2:
         break
 
 # Using the two Finder Patterns, we can now extract the third one without iterating through the whole image
-finder_patterns.append((finder_patterns[1][1], finder_patterns[0][1])) # TODO: Test this later to see if it works for any QR Code
-for line in finder_patterns:
+finder_patterns_coords.append((finder_patterns_coords[1][1], finder_patterns_coords[0][1])) # TODO: Test this later to see if it works for any QR Code
+for line in finder_patterns_coords:
+    print(line)
+
+qr = []
+
+# Extract QR Code (0 for white, 1 for black)
+for i in range(finder_patterns_coords[0][0], finder_patterns_coords[2][0] + 7 * module_size, module_size):
+    row = []
+    for j in range(finder_patterns_coords[0][1], finder_patterns_coords[1][1] + 7 * module_size, module_size):
+        if binary_img[i, j] == 0:
+            row.append(1)
+        else:
+            row.append(0)
+        
+    qr.append(row)
+
+for line in qr:
     print(line)
