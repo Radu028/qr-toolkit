@@ -1,4 +1,5 @@
 import cv2
+from findMask import *
 
 img = cv2.imread('siteQR.png', cv2.IMREAD_GRAYSCALE)
 
@@ -61,3 +62,6 @@ for i in range(finder_patterns_coords[0][0], finder_patterns_coords[2][0] + 7 * 
 
 for line in qr:
     print(line)
+
+findMask(qr)
+
