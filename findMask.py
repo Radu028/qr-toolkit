@@ -73,11 +73,47 @@ def getMatrixMask(decodedMask):
             [0, 0, 1, 0, 0, 1],
             [0, 1, 0, 0, 1, 0]
         ]
+    elif ( decodeMask == [1, 0, 0]):
+        maxtrixMask = [
+            [1, 1, 1, 0, 0, 0],
+            [1, 1, 1, 0, 0, 0],
+            [0, 0, 0, 1, 1, 1],
+            [0, 0, 0, 1, 1, 1],
+            [1, 1, 1, 0, 0, 0],
+            [1, 1, 1, 0, 0, 0]
+        ]
+    elif ( decodeMask == [1, 0, 1]):
+        maxtrixMask = [
+            [1, 1, 1, 1, 1, 1],
+            [1, 0, 0, 0, 0, 0],
+            [1, 0, 0, 1, 0, 0],
+            [1, 0, 1, 0, 1, 0],
+            [1, 0, 0, 1, 0, 0],
+            [1, 0, 0, 0, 0, 0]
+        ]
+    elif ( decodeMask == [1, 1, 0]):
+        maxtrixMask = [
+            [1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 0, 0, 0],
+            [1, 1, 0, 1, 1, 0],
+            [1, 0, 1, 0, 1, 0],
+            [1, 0, 1, 1, 0, 1],
+            [1, 0, 0, 0, 1, 1]
+        ]
+    elif ( decodeMask == [1, 1, 1]):
+        maxtrixMask = [
+            [1, 0, 1, 0, 1, 0],
+            [0, 0, 0, 1, 1, 1],
+            [1, 0, 0, 0, 1, 1],
+            [0, 1, 0, 1, 0, 1],
+            [1, 1, 1, 0, 0, 0],
+            [0, 1, 1, 1, 0, 0]
+        ]
+
+
     else:
         print("Error, the mask ", decodedMask, " is not supported!")
-    #elif ( decodeMask == [] )
 
-    # Todo: In the article there are 4 more known masks that can be used.
     # https://medium.com/@r00__/decoding-a-broken-qr-code-39fc3473a034
 
     return maxtrixMask
