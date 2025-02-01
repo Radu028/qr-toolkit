@@ -1,5 +1,5 @@
 def findMask(qr):
-    print("Hello from a function {}", len(qr), " ", len(qr[0]))
+    #print("Hello from a function {}", len(qr), " ", len(qr[0]))
     lengthBlack = 0
     stop = 0
     for rowIndex in range(0, len(qr)):
@@ -11,7 +11,7 @@ def findMask(qr):
         if stop == 1:
             break
 
-    print(" LengthBlack = ", lengthBlack)
+    #print(" LengthBlack = ", lengthBlack)
 
     # jump over the white line
     lengthBlack = lengthBlack + 1
@@ -23,15 +23,15 @@ def findMask(qr):
     for columnIndex in range(0, 5):
         codedMaskId.append(qr[lengthBlack][columnIndex])
 
-    print("codedMask = ", codedMaskId, lengthBlack, " ", columnIndex)
+    #print("codedMask = ", codedMaskId, lengthBlack, " ", columnIndex)
     for i in range(len(codedMaskId)):
         decodedMaskId.append(codedMaskId[i] ^ primitiveMask[i])
-    print("decodedMask = ", decodedMaskId)
+    #print("decodedMask = ", decodedMaskId)
 
     # first two bits are for error correction, so we drop them
     decodedMaskId.pop(0)
     decodedMaskId.pop(0)
-    print("after dropping the first two bits decodedMask = ", decodedMaskId)
+    #print("after dropping the first two bits decodedMask = ", decodedMaskId)
     matrixMask = getMatrixMask(decodedMaskId)
 
 
