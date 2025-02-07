@@ -1,4 +1,5 @@
 import cv2
+
 from findMask import *
 
 img = cv2.imread('siteQR.png', cv2.IMREAD_GRAYSCALE)
@@ -20,8 +21,8 @@ for i in range(height):
     for j in range(width):
         if binary_img[i, j] == 0 and binary_img[i, j + 1] == 0:
             for k in range(width - j):
-                if binary_img[i, j + k + 1] == 255: # Assume that the first row of black pixels is the finder pattern
-                    finder_patterns_coords.append((i, j)) # Save only the starting point (top-left)
+                if binary_img[i, j + k + 1] == 255:  # Assume that the first row of black pixels is the finder pattern
+                    finder_patterns_coords.append((i, j))  # Save only the starting point (top-left)
                     module_size = (k + 1) // 7
                     break
             if module_size:
@@ -43,10 +44,12 @@ for i in range(finder_patterns_coords[0][0], height):
         break
 
 # Using the two Finder Patterns, we can now extract the third one without iterating through the whole image
-finder_patterns_coords.append((finder_patterns_coords[1][1], finder_patterns_coords[0][1])) # TODO: Test this later to see if it works for any QR Code
+finder_patterns_coords.append((finder_patterns_coords[1][1], finder_patterns_coords[0][
+    1]))  # TODO: Test this later to see if it works for any QR Code
 for line in finder_patterns_coords:
     print(line)
 
+# findMask(finder_patterns_coords, binary_img, height, width)
 qr = []
 
 # Extract QR Code (0 for white, 1 for black)
@@ -57,11 +60,19 @@ for i in range(finder_patterns_coords[0][0], finder_patterns_coords[2][0] + 7 * 
             row.append(1)
         else:
             row.append(0)
-        
+
     qr.append(row)
 
 for line in qr:
     print(line)
 
-findMask(qr)
+decodedMaskId = findMask(qr)
 
+qrVersion = computeQrVersion(qr)
+
+matrixWhereToApplyMask = computeMatrixOfUnmaskedCoordinates(qr)
+
+qrDecoded = applyMask(matrixWhereToApplyMask, qr, decodedMaskId)
+print("QR decoded with mask ", decodedMaskId)
+for line in qrDecoded:
+    print(line)
