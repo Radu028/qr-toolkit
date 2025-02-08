@@ -16,9 +16,7 @@ qr = positionedQR(getQR(binary_img, height, width), binary_img, height, width)
 
 mask_id = get_mask_id(qr)
 
-matrixWhereToApplyMask = computeMatrixOfUnmaskedCoordinates(qr)
-
-qrDecoded = applyMask(matrixWhereToApplyMask, qr, mask_id)
+qrDecoded = applyMask(qr, mask_id)
 print("QR decoded with mask ", mask_id)
 for line in qrDecoded:
     print(line)
