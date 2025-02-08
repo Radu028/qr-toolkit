@@ -1,60 +1,60 @@
 from utils import *
 
 def get_mask_id(qr):
-    lengthBlack = 0
+    length_black = 0
     stop = 0
-    for rowIndex in range(0, len(qr)):
-        for columnIndex in range(0, len(qr[rowIndex])):
-            if qr[rowIndex][columnIndex] != 1:
+    for row_index in range(0, len(qr)):
+        for column_index in range(0, len(qr[row_index])):
+            if qr[row_index][column_index] != 1:
                 stop = 1
                 break
-            lengthBlack += 1
+            length_black += 1
         if stop == 1:
             break
 
     # jump over the white line
-    lengthBlack = lengthBlack + 1
+    length_black = length_black + 1
 
-    primitiveMask = [1, 0, 1, 0, 1]
-    codedMaskId = []
-    decodedMaskId = []
+    primitive_mask = [1, 0, 1, 0, 1]
+    coded_mask_id = []
+    decoded_mask_id = []
 
-    for columnIndex in range(0, 5):
-        codedMaskId.append(qr[lengthBlack][columnIndex])
+    for column_index in range(0, 5):
+        coded_mask_id.append(qr[length_black][column_index])
 
-    for i in range(len(codedMaskId) ):
-        decodedMaskId.append( codedMaskId[i] ^ primitiveMask[i] )
+    for i in range(len(coded_mask_id) ):
+        decoded_mask_id.append( coded_mask_id[i] ^ primitive_mask[i] )
 
     # first two bits are for error correction, so we drop them
-    decodedMaskId.pop(0)
-    decodedMaskId.pop(0)
+    decoded_mask_id.pop(0)
+    decoded_mask_id.pop(0)
 
-    return decodedMaskId
+    return decoded_mask_id
 
-def flipBitAccordingToMask(maskCode, rowIndex, columnIndex):
-    if maskCode == [0, 0, 0]:
-        return (rowIndex + columnIndex) % 2 == 0
-    elif maskCode == [0, 0, 1]:
-        return rowIndex % 2 == 0
-    elif maskCode == [0, 1, 0]:
-        return columnIndex % 3 == 0
-    elif maskCode == [0, 1, 1]:
-        return (rowIndex + columnIndex) % 3 == 0
-    elif maskCode == [1, 0, 0]:
-        return (rowIndex // 2 + columnIndex // 3) % 2 == 0
-    elif maskCode == [1, 0, 1]:
-        return ((rowIndex * columnIndex) % 2 + (rowIndex * columnIndex) % 3) == 0
-    elif maskCode == [1, 1, 0]:
-        return (((rowIndex * columnIndex) % 2 + (rowIndex * columnIndex) % 3) % 2) == 0 == 0
-    elif maskCode == [1, 1, 1]:
-        return (((rowIndex + columnIndex) % 2 + (rowIndex * columnIndex) % 3) % 2) == 0
+def is_bit_flipped(mask_code, row_index, column_index):
+    if mask_code == [0, 0, 0]:
+        return (row_index + column_index) % 2 == 0
+    elif mask_code == [0, 0, 1]:
+        return row_index % 2 == 0
+    elif mask_code == [0, 1, 0]:
+        return column_index % 3 == 0
+    elif mask_code == [0, 1, 1]:
+        return (row_index + column_index) % 3 == 0
+    elif mask_code == [1, 0, 0]:
+        return (row_index // 2 + column_index // 3) % 2 == 0
+    elif mask_code == [1, 0, 1]:
+        return ((row_index * column_index) % 2 + (row_index * column_index) % 3) == 0
+    elif mask_code == [1, 1, 0]:
+        return (((row_index * column_index) % 2 + (row_index * column_index) % 3) % 2) == 0 == 0
+    elif mask_code == [1, 1, 1]:
+        return (((row_index + column_index) % 2 + (row_index * column_index) % 3) % 2) == 0
 
-def applyMask(qr, mask):
+def remove_mask(qr, mask):
     reserved = get_reserved_matrix(qr)
     unmasked_qr = [row[:] for row in qr]
     for i in range(len(qr)):
         for j in range(len(qr[0])):
-            if not reserved[i][j] and flipBitAccordingToMask(mask, i, j):
+            if not reserved[i][j] and is_bit_flipped(mask, i, j):
                 unmasked_qr[i][j] = 0 if qr[i][j] == 1 else 1
     return unmasked_qr
 

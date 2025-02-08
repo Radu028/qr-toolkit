@@ -16,16 +16,16 @@ qr = positionedQR(getQR(binary_img, height, width), binary_img, height, width)
 
 mask_id = get_mask_id(qr)
 
-qrDecoded = applyMask(qr, mask_id)
+unmasked_qr = remove_mask(qr, mask_id)
 print("QR decoded with mask ", mask_id)
-for line in qrDecoded:
+for line in unmasked_qr:
     print(line)
 
-encoding_type = get_encoding_type(qrDecoded)
+encoding_type = get_encoding_type(unmasked_qr)
 print(encoding_type)
 
-message_len = get_message_len(qrDecoded, encoding_type)
+message_len = get_message_len(unmasked_qr, encoding_type)
 print(message_len)
 
-message = get_message(qrDecoded, encoding_type, message_len)
+message = get_message(unmasked_qr, encoding_type, message_len)
 print(message)
