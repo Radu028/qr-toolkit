@@ -1,3 +1,5 @@
+
+import reedsolo
 from utils import *
 
 def get_encoding_type(qr):
@@ -14,6 +16,20 @@ def get_encoding_type(qr):
         return "Byte"
     elif bytes == "1000":
         return "Kanji"
+    
+    return "Unknown"
+
+def get_correction_level(qr):
+    bytes = str(qr[0][8]) + str(qr[1][8])
+
+    if bytes == "01":
+        return "L"
+    elif bytes == "00":
+        return "M"
+    elif bytes == "10":
+        return "Q"
+    elif bytes == "11":
+        return "H"
     
     return "Unknown"
     
@@ -86,28 +102,60 @@ def extract_bits(qr):
         col -= 2
         up = not up
 
-    # for linie in reserved:
-    #     for element in linie:
-    #         if element:
-    #             print("X", end=" ")
-    #         else:
-    #             print("O", end=" ")
-    #     print()
-
     return "".join(result_bits)
 
+def get_ecc_codewords_count(version, ecc_level):
+    lookup = {
+        1: {'L': 7,  'M': 10, 'Q': 13, 'H': 17},
+        2: {'L': 10, 'M': 16, 'Q': 22, 'H': 28},
+        3: {'L': 15, 'M': 26, 'Q': 36, 'H': 44},
+        4: {'L': 20, 'M': 36, 'Q': 52, 'H': 68},
+    }
+    return lookup[version][ecc_level]
+
+def correct_bitstream(bitstream, version, ecc_level):
+    # Check if the length of the bitstream is a multiple of 8;
+    # if not, add pad bits (0s) until it reaches a multiple of 8.
+    if len(bitstream) % 8 != 0:
+        pad_length = 8 - (len(bitstream) % 8)
+        print(f"Add {pad_length} bits (0) as padding.")
+        bitstream += "0" * pad_length
+
+    # Convert the bitstream into codewords (groups of 8 bits)
+    codewords = [int(bitstream[i:i+8], 2) for i in range(0, len(bitstream), 8)]
+    nsym = get_ecc_codewords_count(version, ecc_level)
+    try:
+        rsc = reedsolo.RSCodec(nsym)
+        corrected = rsc.decode(bytearray(codewords))
+        # Transform the result (bytearray) into a bit string
+        corrected_bitstream = "".join(f"{byte:08b}" for byte in corrected)
+        return corrected_bitstream
+    except reedsolo.ReedSolomonError as e:
+        print("Eroare la corectarea Reed–Solomon:", e)
+        return None
 
 
-def get_message(qr, encoding_type, message_len):
-    bits_list = extract_bits(qr)
+
+def get_message(qr, encoding_type, ecc_level="L"):
+    # bits_list = extract_bits(qr)
+    raw_bitstream = extract_bits(qr)
     # Convert the list of bits (0 and 1) into a string of '0'/'1' characters
-    bit_str = "".join(str(b) for b in bits_list)
+    # bit_str = "".join(str(b) for b in bits_list)
 
     # After the specification, the first 4 bits are the mode indicator,
     # and the next bits are the length indicator (their number depends on the mode):
     n = len(qr)
     version = ((n - 21) // 4) + 1 if n >= 21 else 1
     print("Versiunea QR: ", version)
+
+    if ecc_level != "L":
+        corrected_bitstream = correct_bitstream(raw_bitstream, version, ecc_level)
+        if corrected_bitstream is None:
+            raise ValueError("Correction failed.")
+        bit_str = corrected_bitstream
+    else:
+        bit_str = raw_bitstream
+    
     if 1 <= version <= 9:
         if encoding_type == "Numeric":
             count_indicator_length = 10
@@ -131,6 +179,10 @@ def get_message(qr, encoding_type, message_len):
             count_indicator_length = 16
     else:
         raise ValueError("Versiunea QR necunoscută: " + str(version))
+    
+    # Calc message len
+    message_len = int(bit_str[4:4 + count_indicator_length], 2)
+    print("Lungimea mesajului: ", message_len)
     
     # Skip the first 4 bits (mode indicator) and the length indicator
     pos = 4 + count_indicator_length
