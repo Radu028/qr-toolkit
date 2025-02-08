@@ -2,11 +2,11 @@ def get_qr_version(qr):
     n = len(qr)
     return ((n - 21) // 4) + 1 if n >= 21 else 1
 
-reserved = None
+# reserved = None
 def get_reserved_matrix(qr):
-    global reserved
-    if reserved is not None:
-        return reserved
+    # global reserved
+    # if reserved is not None:
+    #     return reserved
     
     n = len(qr)
     version = get_qr_version(qr)
@@ -86,7 +86,6 @@ def get_reserved_matrix(qr):
     dark_module_row = 4 * version + 8
     dark_module_col = 8
     if dark_module_row < n:
-        # reserved[dark_module_row][dark_module_col] = True
-        pass
+        reserved[dark_module_row][dark_module_col] = True
 
     return reserved

@@ -45,7 +45,7 @@ def is_bit_flipped(mask_code, row_index, column_index):
     elif mask_code == [1, 0, 1]:
         return ((row_index * column_index) % 2 + (row_index * column_index) % 3) == 0
     elif mask_code == [1, 1, 0]:
-        return (((row_index * column_index) % 2 + (row_index * column_index) % 3) % 2) == 0 == 0
+        return (((row_index * column_index) % 2 + (row_index * column_index) % 3) % 2) == 0
     elif mask_code == [1, 1, 1]:
         return (((row_index + column_index) % 2 + (row_index * column_index) % 3) % 2) == 0
 
