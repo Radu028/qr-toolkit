@@ -291,21 +291,21 @@ def computeMatrixOfUnmaskedCoordinates(qr):
 def flipBitAccordingToMask(maskCode, rowIndex, columnIndex):
     flipBit = False
     if maskCode == [0, 0, 0]:
-        flipBit =  ( rowIndex + columnIndex ) % 2 == 0
+        flipBit =  (rowIndex + columnIndex) % 2 == 0
     if maskCode == [0, 0, 1]:
         flipBit = rowIndex % 2 == 0
     if maskCode == [0, 1, 0]:
         flipBit =  columnIndex % 3 == 0
     if maskCode == [0, 1, 1]:
-        flipBit =  ( rowIndex + columnIndex ) % 3 == 0
+        flipBit =  (rowIndex + columnIndex) % 3 == 0
     if maskCode == [1, 0, 0]:
-        flipBit =  ( rowIndex /2 + columnIndex /3 ) % 2 == 0
+        flipBit =  (rowIndex // 2 + columnIndex // 3) % 2 == 0
     if maskCode == [1, 0, 1]:
-        flipBit =  ( (( rowIndex * columnIndex ) % 2) + ( ( rowIndex * columnIndex ) % 3 ) ) == 0
+        flipBit =  ((rowIndex * columnIndex) % 2 + (rowIndex * columnIndex) % 3) == 0
     if maskCode == [1, 1, 0]:
-        flipBit =  ( ( ( rowIndex + columnIndex ) % 3 ) + ( ( rowIndex * columnIndex ) % 2 ) ) == 0
+        flipBit =  ((rowIndex + columnIndex) % 3 + (rowIndex * columnIndex) % 2) == 0
     if maskCode == [1, 1, 1]:
-        flipBit =  ( ( ( rowIndex + columnIndex ) % 3) + rowIndex + columnIndex ) % 2 == 0
+        flipBit =  (((rowIndex + columnIndex) % 3) + rowIndex + columnIndex) % 2 == 0
 
     return flipBit
 
