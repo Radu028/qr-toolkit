@@ -289,25 +289,22 @@ def computeMatrixOfUnmaskedCoordinates(qr):
     return matrixWhereToApplyMask
 
 def flipBitAccordingToMask(maskCode, rowIndex, columnIndex):
-    flipBit = False
     if maskCode == [0, 0, 0]:
-        flipBit =  (rowIndex + columnIndex) % 2 == 0
-    if maskCode == [0, 0, 1]:
-        flipBit = rowIndex % 2 == 0
-    if maskCode == [0, 1, 0]:
-        flipBit =  columnIndex % 3 == 0
-    if maskCode == [0, 1, 1]:
-        flipBit =  (rowIndex + columnIndex) % 3 == 0
-    if maskCode == [1, 0, 0]:
-        flipBit =  (rowIndex // 2 + columnIndex // 3) % 2 == 0
-    if maskCode == [1, 0, 1]:
-        flipBit =  ((rowIndex * columnIndex) % 2 + (rowIndex * columnIndex) % 3) == 0
-    if maskCode == [1, 1, 0]:
-        flipBit =  ((rowIndex + columnIndex) % 3 + (rowIndex * columnIndex) % 2) == 0
-    if maskCode == [1, 1, 1]:
-        flipBit =  (((rowIndex + columnIndex) % 3) + rowIndex + columnIndex) % 2 == 0
-
-    return flipBit
+        return (rowIndex + columnIndex) % 2 == 0
+    elif maskCode == [0, 0, 1]:
+        return rowIndex % 2 == 0
+    elif maskCode == [0, 1, 0]:
+        return columnIndex % 3 == 0
+    elif maskCode == [0, 1, 1]:
+        return (rowIndex + columnIndex) % 3 == 0
+    elif maskCode == [1, 0, 0]:
+        return (rowIndex // 2 + columnIndex // 3) % 2 == 0
+    elif maskCode == [1, 0, 1]:
+        return ((rowIndex * columnIndex) % 2 + (rowIndex * columnIndex) % 3) == 0
+    elif maskCode == [1, 1, 0]:
+        return (((rowIndex * columnIndex) % 2 + (rowIndex * columnIndex) % 3) % 2) == 0 == 0
+    elif maskCode == [1, 1, 1]:
+        return (((rowIndex + columnIndex) % 2 + (rowIndex * columnIndex) % 3) % 2) == 0
 
 def applyMask(matrixWhereToApply, qr, mask):
     qrDecoded = qr
