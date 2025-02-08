@@ -187,7 +187,6 @@ def get_message(qr, encoding_type, message_len):
     bits_list = extract_bits(qr)
     # Convert the list of bits (0 and 1) into a string of '0'/'1' characters
     bit_str = "".join(str(b) for b in bits_list)
-    print(bit_str)
 
     # After the specification, the first 4 bits are the mode indicator,
     # and the next bits are the length indicator (their number depends on the mode):
