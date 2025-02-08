@@ -28,7 +28,7 @@ def detectPositioning():
     if eyes[0].count(0) or eyes[1].count(0):
         return eyes
             
-    eyePixels=0;
+    eyePixels=0
     
     #If i have a black pixel in the non-eye corner i count the lenght of an eye in pixels and if it happens to find the non-eye corner i return the eyes corner i replace it and return the coordonates of the corners with eyes
     for j in range(width):
