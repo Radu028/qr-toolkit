@@ -1,5 +1,7 @@
 import cv2
 
+from findMask import *
+
 def detectPositioning():
     
     global binary_img, height, width
@@ -241,7 +243,15 @@ finder_patterns_coords=findCoordonates()
 
 print(finder_patterns_coords)
 
-qr=positionedQR(getQR())
+qr = positionedQR(getQR())
 
-for line in qr:
+decodedMaskId = findMask(qr)
+
+qrVersion = computeQrVersion(qr)
+
+matrixWhereToApplyMask = computeMatrixOfUnmaskedCoordinates(qr)
+
+qrDecoded = applyMask(matrixWhereToApplyMask, qr, decodedMaskId)
+print("QR decoded with mask ", decodedMaskId)
+for line in qrDecoded:
     print(line)
