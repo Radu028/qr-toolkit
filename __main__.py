@@ -8,30 +8,50 @@ def detectPositioning():
     global binary_img, height, width
     eyes = [[0,0],[0,0]]
     
-    for i in range(height):
+    for i in range(height): #Search for the upper left corner
         for j in range(width//2):
             if binary_img[i, j] == 0:
                 eyes[0][0]=(i, j)
-            if binary_img[i, width-1-j] == 0:
-                eyes[0][1]=(i, width-1-j)
-            if eyes[0][0] or eyes[0][1]:
+            if eyes[0][0]:
                 break
             
-    for i in range(height-1, -1, -1):
+    for i in range(height): #Search for the upper right corner
+        for j in range(width//2):
+            if binary_img[i, width-1-j] == 0:
+                eyes[0][1]=(i, width-1-j)
+            if eyes[0][1]:
+                break
+            
+    for i in range(height-1, -1, -1): #Search for the lower left corner
         for j in range(width//2):
             if binary_img[i, j] == 0:
                 eyes[1][0]=(i, j)
+            if eyes[1][0]:
+                break
+            
+    for i in range(height-1, -1, -1): #Search for the lower right corner
+        for j in range(width//2):
             if binary_img[i, width-1-j] == 0:
                 eyes[1][1]=(i, width-1-j)
-            if eyes[1][0] or eyes[1][1]:
+            if eyes[1][1]:
                 break
+            
+    if eyes[0][0][1]>eyes[1][0][1]:
+        eyes[0][0]=0
+    elif eyes[0][0][1]<eyes[1][0][1]:
+        eyes[1][0]=0
+        
+    if eyes[0][1][1]>eyes[1][1][1]:
+        eyes[1][1]=0
+    elif eyes[0][1][1]<eyes[1][1][1]:
+        eyes[0][1]=0
     
     #Now i have the corners of the qr code(4 if i have a black pixel in the non-eye corner or 3 otherwise)
     
     if eyes[0].count(0) or eyes[1].count(0):
         return eyes
             
-    eyePixels=0
+    eyePixels=0;
     
     #If i have a black pixel in the non-eye corner i count the lenght of an eye in pixels and if it happens to find the non-eye corner i return the eyes corner i replace it and return the coordonates of the corners with eyes
     for j in range(width):
@@ -109,7 +129,7 @@ def getModule():
 def findCoordonates():
     global binary_img, height, width
     
-    module_size=getModule()
+    module_size=getModule();
     
     finder_patterns_coordsi=set({})
     finder_patterns_coordsj=set({})
