@@ -1,6 +1,7 @@
 import cv2
 
 from findMask import *
+from reading import *
 
 def detectPositioning():
     
@@ -108,7 +109,7 @@ def getModule():
 def findCoordonates():
     global binary_img, height, width
     
-    module_size=getModule();
+    module_size=getModule()
     
     finder_patterns_coordsi=set({})
     finder_patterns_coordsj=set({})
@@ -228,7 +229,7 @@ def positionedQR(qr): #Rotates the QR if needed
         
     return qr
        
-img = cv2.imread('siteQR.png', cv2.IMREAD_GRAYSCALE)
+img = cv2.imread('image2.jpeg', cv2.IMREAD_GRAYSCALE)
 
 # Dimensions
 height, width = img.shape
@@ -241,7 +242,7 @@ _, binary_img = cv2.threshold(img, 127, 255, cv2.THRESH_BINARY)
 
 finder_patterns_coords=findCoordonates()
 
-print(finder_patterns_coords)
+# print(finder_patterns_coords)
 
 qr = positionedQR(getQR())
 
@@ -255,3 +256,12 @@ qrDecoded = applyMask(matrixWhereToApplyMask, qr, decodedMaskId)
 print("QR decoded with mask ", decodedMaskId)
 for line in qrDecoded:
     print(line)
+
+encoding_type = get_encoding_type(qrDecoded)
+print(encoding_type)
+
+message_len = get_message_len(qrDecoded, encoding_type)
+print(message_len)
+
+message = get_message(qrDecoded, encoding_type, message_len)
+print(message)
