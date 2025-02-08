@@ -1,4 +1,4 @@
-from findMask import computeQrVersion
+from utils import *
 
 def get_encoding_type(qr):
     rows = len(qr)
@@ -18,8 +18,7 @@ def get_encoding_type(qr):
     return "Unknown"
     
 def get_message_len(qr, encoding_type):
-    n = len(qr)
-    qr_version = ((n - 21) // 4) + 1 if n >= 21 else 1
+    qr_version = get_qr_version(qr)
     
     if 1 <= qr_version <= 9:
         if encoding_type == "Numeric":
@@ -55,7 +54,7 @@ def get_message_len(qr, encoding_type):
 
 def extract_bits(qr):
     n = len(qr)
-    version = (n - 21) // 4 + 1
+    version = get_qr_version(qr)
 
     # Matrix 'reserved' will be True on reserved (function) positions, False on data positions.
     reserved = [[False for _ in range(n)] for _ in range(n)]
@@ -132,7 +131,8 @@ def extract_bits(qr):
     dark_module_row = 4 * version + 8
     dark_module_col = 8
     if dark_module_row < n:
-        reserved[dark_module_row][dark_module_col] = True
+        # reserved[dark_module_row][dark_module_col] = True
+        pass
 
     # === 2. Extract bits from the data area, following the standard reading path ===
 
@@ -164,6 +164,14 @@ def extract_bits(qr):
         col -= 2
         up = not up
 
+    # for linie in reserved:
+    #     for element in linie:
+    #         if element:
+    #             print("X", end=" ")
+    #         else:
+    #             print("O", end=" ")
+    #     print()
+
     return "".join(result_bits)
 
 
@@ -177,6 +185,7 @@ def get_message(qr, encoding_type, message_len):
     # and the next bits are the length indicator (their number depends on the mode):
     n = len(qr)
     version = ((n - 21) // 4) + 1 if n >= 21 else 1
+    print("Versiunea QR: ", version)
     if 1 <= version <= 9:
         if encoding_type == "Numeric":
             count_indicator_length = 10
@@ -260,5 +269,3 @@ def get_message(qr, encoding_type, message_len):
                 i += 1
 
     return message
-
-

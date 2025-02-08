@@ -1,7 +1,6 @@
+from utils import *
 
-def findMask(qr):
-
-    #print("Hello from a function {}", len(qr), " ", len(qr[0]))
+def get_mask_id(qr):
     lengthBlack = 0
     stop = 0
     for rowIndex in range(0, len(qr)):
@@ -13,8 +12,6 @@ def findMask(qr):
         if stop == 1:
             break
 
-    #print (" LengthBlack = ", lengthBlack)
-
     # jump over the white line
     lengthBlack = lengthBlack + 1
 
@@ -25,114 +22,65 @@ def findMask(qr):
     for columnIndex in range(0, 5):
         codedMaskId.append(qr[lengthBlack][columnIndex])
 
-    #print("codedMask = ", codedMaskId, lengthBlack, " ", columnIndex )
     for i in range(len(codedMaskId) ):
         decodedMaskId.append( codedMaskId[i] ^ primitiveMask[i] )
-    #print("decodedMask = ", decodedMaskId )
 
     # first two bits are for error correction, so we drop them
     decodedMaskId.pop(0)
     decodedMaskId.pop(0)
-    #print("after dropping the first two bits decodedMask = ", decodedMaskId )
 
     return decodedMaskId
-    # matrixMask = getMatrixMask(decodedMaskId)
-    # expandMaskAsQrMatrix(qr, matrixMask)
-
-    # qrVersion = computeQrVersion(qr)
-    # print("QR verion is ", qrVersion)
-
-    # computeMatrixOfUnmaskedCoordinates(qr)
 
 
+# def getMatrixMask(decodedMask):
+#     maxtrixMask = []
+#     if decodedMask == [0 ,0 ,0]:
+#         maxtrixMask = [
+#             [1, 0, 1, 0, 1, 0],
+#             [0, 1, 0, 1, 0, 1],
+#             [1, 0, 1, 0, 1, 0],
+#             [0, 1, 0, 1, 0, 1],
+#             [1, 0, 1, 0, 1, 0],
+#             [0, 1, 0, 1, 0, 1]
+#         ]
+#     elif decodedMask == [0, 0, 1]:
+#         maxtrixMask = [
+#             [1, 1, 1, 1, 1, 1],
+#             [0, 0, 0, 0, 0, 0],
+#             [1, 1, 1, 1, 1, 1],
+#             [0, 0, 0, 0, 0, 0],
+#             [1, 1, 1, 1, 1, 1],
+#             [0, 0, 0, 0, 0, 0]
+#         ]
+#     elif (decodedMask == [0, 1, 0]):
+#         maxtrixMask = [
+#             [1, 0, 0, 1, 0, 0],
+#             [1, 0, 0, 1, 0, 0],
+#             [1, 0, 0, 1, 0, 0],
+#             [1, 0, 0, 1, 0, 0],
+#             [1, 0, 0, 1, 0, 0],
+#             [1, 0, 0, 1, 0, 0]
+#         ]
+#     elif (decodedMask == [0, 1, 1]):
+#         maxtrixMask = [
+#             [1, 0, 0, 1, 0, 0],
+#             [0, 0, 1, 0, 0, 1],
+#             [0, 1, 0, 0, 1, 0],
+#             [1, 0, 0, 1, 0, 0],
+#             [0, 0, 1, 0, 0, 1],
+#             [0, 1, 0, 0, 1, 0]
+#         ]
+#         #print (" Am ajuns aici ")
+#     else:
+#         print ("Error, the mask ", decodedMask, " is not supported!")
+#     # elif ( decodeMask == [] )
+#     # Todo: In the article there are 4 more known masks that can be used.
+#     # https://medium.com/@r00__/decoding-a-broken-qr-code-39fc3473a034
 
-def getMatrixMask(decodedMask):
-    maxtrixMask = []
-    if ( decodedMask == [0 ,0 ,0] ):
-        maxtrixMask = [
-            [1, 0, 1, 0, 1, 0],
-            [0, 1, 0, 1, 0, 1],
-            [1, 0, 1, 0, 1, 0],
-            [0, 1, 0, 1, 0, 1],
-            [1, 0, 1, 0, 1, 0],
-            [0, 1, 0, 1, 0, 1]
-        ]
-    elif ( decodedMask == [0, 0, 1] ):
-        maxtrixMask = [
-            [1, 1, 1, 1, 1, 1],
-            [0, 0, 0, 0, 0, 0],
-            [1, 1, 1, 1, 1, 1],
-            [0, 0, 0, 0, 0, 0],
-            [1, 1, 1, 1, 1, 1],
-            [0, 0, 0, 0, 0, 0]
-        ]
-    elif (decodedMask == [0, 1, 0]):
-        maxtrixMask = [
-            [1, 0, 0, 1, 0, 0],
-            [1, 0, 0, 1, 0, 0],
-            [1, 0, 0, 1, 0, 0],
-            [1, 0, 0, 1, 0, 0],
-            [1, 0, 0, 1, 0, 0],
-            [1, 0, 0, 1, 0, 0]
-        ]
-    elif (decodedMask == [0, 1, 1]):
-        maxtrixMask = [
-            [1, 0, 0, 1, 0, 0],
-            [0, 0, 1, 0, 0, 1],
-            [0, 1, 0, 0, 1, 0],
-            [1, 0, 0, 1, 0, 0],
-            [0, 0, 1, 0, 0, 1],
-            [0, 1, 0, 0, 1, 0]
-        ]
-        #print (" Am ajuns aici ")
-    else:
-        print ("Error, the mask ", decodedMask, " is not supported!")
-    # elif ( decodeMask == [] )
-    # Todo: In the article there are 4 more known masks that can be used.
-    # https://medium.com/@r00__/decoding-a-broken-qr-code-39fc3473a034
-
-    return maxtrixMask
-
-def expandMaskAsQrMatrix(QrMatrix, originalMaxMatrix):
-    nrRows = 6
-    nrColumns = 6
-    expandedMatrix = []
-    for i in range (0, len(QrMatrix)):
-        expandedMatrix.append([])
-        for j in range (0, len(QrMatrix[i])):
-            expandedMatrix[i].append(originalMaxMatrix[i % nrRows][j % nrColumns])
-
-    #print("Expanded Matrix Max: \n")
-    # for line in expandedMatrix:
-    #     print(line)
-
-def computeQrVersion(QrMatrix):
-    nrRows = len(QrMatrix)
-    nrColumns = len (QrMatrix[0]) # this code expects all lines to have the same length
-
-    if nrRows != nrColumns:
-        #print("Error, nrRows and nrColumns are different nrRows = ", nrRows, " nrColumns = ", nrColumns )
-        return -1
-
-    if nrRows < 21 or nrColumns < 21:
-        #print("Error, nrRows or nrColumns is lower than 21, nrRows = ", nrRows, " nrColumns = ", nrColumns)
-        return -1
-
-    if (nrRows - 21) % 4 != 0:
-        #print("Error, matrix dimensions are not supported, nrRows = ", nrRows, " nrColumns = ", nrColumns)
-        return -1
-
-    # Accorting to this link https://www.qrcode.com/en/about/version.html#:~:text=Each%20version%20has%20a%20different,(177%20%C3%97%20177%20modules).
-    # 21x21 is version 1, 25x25 is verion 2, 29x29 is version 3, ...
-
-    qrVersion = ((nrRows - 21) // 4) + 1
-
-    return qrVersion
+#     return maxtrixMask
 
 def excludeTimingPatterns(matrixToFill):
-
     # 6th row and 6th columns
-
     for i in range (0, len(matrixToFill)):
         matrixToFill[6][i] = 0
 
@@ -140,13 +88,13 @@ def excludeTimingPatterns(matrixToFill):
         matrixToFill[i][6] = 0
 
 def excludeDarkModule(matrixToFill):
-    v = computeQrVersion(matrixToFill)
+    version = get_qr_version(matrixToFill)
     # According to https://www.thonky.com/qr-code-tutorial/module-placement-matrix#step-2-add-the-separators
     # the dark module is located at ([(4 * V) + 9], 8).
-    matrixToFill[( 4 *v) + 9][8] = 0
+    matrixToFill[(4 * version) + 9][8] = 0
 
 def excludeFormatInformationArea(matrixToFill):
-    qrVersion = computeQrVersion(matrixToFill)
+    qrVersion = get_qr_version(matrixToFill)
     height = len(matrixToFill)
 
     # top left
@@ -178,7 +126,7 @@ def getCoordinatesCentersForAlignmentPatterns(matrixToFill):
     # Accordint to https://www.thonky.com/qr-code-tutorial/alignment-pattern-locations
     # the centers of alignment patterns are hardcoded for each 5x5 squares.
     # note 1: They do not overlap with FinderPatterns!
-    qrVersion = computeQrVersion(matrixToFill)
+    qrVersion = get_qr_version(matrixToFill)
     height = len(matrixToFill)
 
     pointsAlignment = []
@@ -288,8 +236,8 @@ def getCoordinatesCentersForAlignmentPatterns(matrixToFill):
 
 def excludeAlignmentPatterns(matrixToFill):
     centers = getCoordinatesCentersForAlignmentPatterns(matrixToFill)
-    print("Centers : ")
-    print(centers)
+    # print("Centers : ")
+    # print(centers)
 
     for i in range (0 , len(centers)):
         center = centers[i]
@@ -304,8 +252,8 @@ def excludeFinderAndSeparatorsPatterns(matrixToFill):
 
     # Size of corner squares is 7 x 7, but wee need additionals lines for separators
     # so the size 8 x 8.
-    print (" height ", len(matrixToFill) )
-    print ("width ", len(matrixToFill[0]))
+    # print (" height ", len(matrixToFill) )
+    # print ("width ", len(matrixToFill[0]))
 
     for i in range(0, 8):
         for j in range(0, 8):
@@ -322,14 +270,11 @@ def excludeFinderAndSeparatorsPatterns(matrixToFill):
             matrixToFill[i][j] = 0
 
 def computeMatrixOfUnmaskedCoordinates(qr):
-    qrVersion = computeQrVersion(qr)
-
     matrixWhereToApplyMask = []
     for i in range(0, len(qr)):
         matrixWhereToApplyMask.append([])
         for j in range(0, len(qr[0])):
             matrixWhereToApplyMask[i].append(1)
-
 
     excludeFinderAndSeparatorsPatterns(matrixWhereToApplyMask)
     excludeTimingPatterns(matrixWhereToApplyMask)
@@ -337,9 +282,9 @@ def computeMatrixOfUnmaskedCoordinates(qr):
     excludeFormatInformationArea(matrixWhereToApplyMask)
 
     excludeAlignmentPatterns(matrixWhereToApplyMask)
-    print("Excluded coordinates for mask: \n")
-    for line in matrixWhereToApplyMask:
-        print(line)
+    # print("Excluded coordinates for mask: \n")
+    # for line in matrixWhereToApplyMask:
+    #     print(line)
 
     return matrixWhereToApplyMask
 
