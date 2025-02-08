@@ -249,7 +249,7 @@ def positionedQR(qr): #Rotates the QR if needed
         
     return qr
        
-img = cv2.imread('image2.jpeg', cv2.IMREAD_GRAYSCALE)
+img = cv2.imread('qr-code.png', cv2.IMREAD_GRAYSCALE)
 
 # Dimensions
 height, width = img.shape

@@ -1,25 +1,10 @@
 from findMask import computeQrVersion
 
-def is_eci(qr):
-    rows = len(qr)
-    cols = len(qr[0])
-    bytes = str(qr[rows - 1][cols - 1]) + str(qr[rows - 1][cols - 2]) + str(qr[rows - 2][cols - 1]) + str(qr[rows - 2][cols - 2])
-    
-    if bytes == "0111":
-        return True
-    
-    return False
-
 def get_encoding_type(qr):
     rows = len(qr)
     cols = len(qr[0])
     
-    if is_eci(qr):
-        # bytes = str(qr[rows - 3][cols - 1]) + str(qr[rows - 3][cols - 2]) + str(qr[rows - 4][cols - 1]) + str(qr[rows - 4][cols - 2])
-        # Find how many bits for ECI
-        pass
-    else:
-        bytes = str(qr[rows - 1][cols - 1]) + str(qr[rows - 1][cols - 2]) + str(qr[rows - 2][cols - 1]) + str(qr[rows - 2][cols - 2])
+    bytes = str(qr[rows - 1][cols - 1]) + str(qr[rows - 1][cols - 2]) + str(qr[rows - 2][cols - 1]) + str(qr[rows - 2][cols - 2])
 
     if bytes == "0001":
         return "Numeric"
