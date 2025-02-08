@@ -103,8 +103,8 @@ def expandMaskAsQrMatrix(QrMatrix, originalMaxMatrix):
             expandedMatrix[i].append(originalMaxMatrix[i % nrRows][j % nrColumns])
 
     #print("Expanded Matrix Max: \n")
-    for line in expandedMatrix:
-        print(line)
+    # for line in expandedMatrix:
+    #     print(line)
 
 def computeQrVersion(QrMatrix):
     nrRows = len(QrMatrix)
