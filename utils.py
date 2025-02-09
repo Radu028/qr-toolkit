@@ -84,7 +84,7 @@ def get_reserved_matrix(qr):
 
     # 6. Dark module
     dark_module_row = 4 * version + 8
-    dark_module_col = 8
+    dark_module_col = 7
     if dark_module_row < n:
         reserved[dark_module_row][dark_module_col] = True
 
