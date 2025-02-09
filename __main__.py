@@ -4,7 +4,7 @@ from read import *
 from mask import *
 from decode import *
        
-img = cv2.imread('qr-code-2.png', cv2.IMREAD_GRAYSCALE)
+img = cv2.imread('qr-code.png', cv2.IMREAD_GRAYSCALE)
 height, width = img.shape # dimensions of the image
 
 _, binary_img = cv2.threshold(img, 127, 255, cv2.THRESH_BINARY)
@@ -39,3 +39,9 @@ print(correction_level)
 
 message = get_message(unmasked_qr, encoding_type, correction_level)
 print(message)
+
+#Example function call to apply the best mask for a given qr matrix.
+# (mask, qrWithMask) = compute_QR_with_the_best_mask(qr)
+# print("QR  with mask applied for writing ", mask)
+# for line in qrWithMask:
+#     print(line)
