@@ -33,9 +33,9 @@ message = get_message(unmasked_qr, encoding_type, correction_level)
 print(message)
 
 # This is just testing, if you want to see the print uncomment prints in the function get_matrix_write.
-# for i in range(21, 70, 4):
-#     qr_test = [[0 for _ in range(i)] for _ in range(i) ]
-#     get_matrix_write(qr_test)
+for i in range(21, 35, 4):
+    qr_test = [[0 for _ in range(i)] for _ in range(i) ]
+    get_matrix_write(qr_test)
 
 # Example function call to apply the best mask for a given qr matrix.
 # (mask, qrWithMask) = compute_QR_with_the_best_mask(qr)

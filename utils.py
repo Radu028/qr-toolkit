@@ -83,8 +83,8 @@ def get_reserved_matrix(qr):
         mark_rect(n - 11, n - 9, 0, 5)  # bottom-left
 
     # 6. Dark module
-    dark_module_row = 4 * version + 8
-    dark_module_col = 7
+    dark_module_row = 4 * version + 9
+    dark_module_col = 8
     if dark_module_row < n:
         reserved[dark_module_row][dark_module_col] = True
 
@@ -146,10 +146,12 @@ def get_matrix_write(matrixQR):
     matrix_timing_patterns(matrixQR)
 
     #  Dark module
-    dark_module_row = 4 * version + 8
+    dark_module_row = 4 * version + 9
     dark_module_col = 8
     if dark_module_row < n:
         matrixQR[dark_module_row][dark_module_col] = 1
+
+
 
     # print( "patterns:  ")
     # for line in matrixQR:
@@ -161,3 +163,4 @@ def get_matrix_write(matrixQR):
     #             print(elem,"",end = "")
     #     print ("]")
     #
+    return matrixQR
