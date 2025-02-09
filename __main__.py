@@ -31,3 +31,9 @@ correction_level = get_correction_level(unmasked_qr)
 
 message = get_message(unmasked_qr, encoding_type, correction_level)
 print(message)
+
+#Example function call to apply the best mask for a given qr matrix.
+# (mask, qrWithMask) = compute_QR_with_the_best_mask(qr)
+# print("QR  with mask applied for writing ", mask)
+# for line in qrWithMask:
+#     print(line)
