@@ -46,7 +46,7 @@ def encode_rs(encodedMessage):
     
     return encodedMessageRS_str
 
-def makeMatrixBeforeMask():
+def make_matrix_before_mask():
     global message
     
     #Dimensions for the versions of QR(Byte,L)
@@ -224,4 +224,4 @@ def makeMatrixBeforeMask():
 
 message=input("Message: ") #The input that will be made a QR code
 
-makeMatrixBeforeMask()
+make_matrix_before_mask()
