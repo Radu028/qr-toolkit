@@ -32,7 +32,7 @@ Prin combinarea acestor pasi, proiectul parcurge intregul flux de procesare a un
 ## Generare
 
 1. **Codarea mesajului**
-    Procesul incepe cu functia `encode` din `matrToPhoto.py`, care primeste mesajul ca input si genereaza un sir binar ce respecta specificatiile QR:
+    Procesul incepe cu functia `encode` din `matrix_to_photo.py`, care primeste mesajul ca input si genereaza un sir binar ce respecta specificatiile QR:
     - Se adauga indicatorul de mod (pentru modul Byte, se foloseste "0100").
     - Se calculeaza dimensiunea campului de numar de caractere, alegand 8, 16 sau 24 de biti in functie de lungimea mesajului.
     - Fiecarui caracter ii este atribuita forma binara pe 8 biti.
@@ -40,7 +40,7 @@ Prin combinarea acestor pasi, proiectul parcurge intregul flux de procesare a un
 
 2. **Corectia erorilor cu Reed–Solomon**
     Dupa codarea initiala, se aplica corectia erorilor:
-    - Functia `encodeRS` transforma sirul binar in array de octeti (fiecare grup de 8 biti devine un octet).
+    - Functia `encode_rs` transforma sirul binar in array de octeti (fiecare grup de 8 biti devine un octet).
     - Per totalul de octeti pentru corectie (care se introduce din consola), se instantiaza un obiect de la biblioteca `reedsolo.RSCodec`.
     - Mesajul (reprezentat ca array de octeti) este codificat suplimentar, adaugand simboluri de corectie.
     - Rezultatul este reconvertit intr-un sir binar completat cu codurile de verificare.
@@ -52,7 +52,7 @@ Prin combinarea acestor pasi, proiectul parcurge intregul flux de procesare a un
     Dupa obtinerea unui sir binar complet (cu codificare initiala si corectie a erorilor) si dupa aplicarea mastii, se construieste o matrice 2D. Fiecare element reprezinta un modul (sau punct), 0 pentru alb si 1 pentru negru. Integrarea zonelor functionale si a semnalelor de orientare se face pe baza specificatiilor QR.
 
 5. **Generarea imaginii QR**
-    Ultimul pas este conversia matricei 2D intr-o imagine. Acest lucru se realizeaza folosind biblioteca `matplotlib` (importata la inceputul `matrToPhoto.py`). Functiile specifice se ocupa de:
+    Ultimul pas este conversia matricei 2D intr-o imagine. Acest lucru se realizeaza folosind biblioteca `matplotlib` (importata la inceputul `matrix_to_photo.py`). Functiile specifice se ocupa de:
     - Redarea unui grid vizual, unde modulele au culori contrastante (negru si alb).
     - Salvarea imaginii finale care reprezinta codul QR gata de scanare.
 
@@ -65,9 +65,14 @@ Referinte in cadrul proiectului:
 - Decodarea mesajului: `decode.py`  
 - Corectia erorilor: `correction.py`  
 - Marcare zone rezervate: `utils.py`
-- Generare QR: `matrToPhoto.py`
+- Generare QR: `matrix_to_photo.py`
 
 Librarii folosite in cadrul acestui proiect:
 - OpenCV (cv): folosita pentru citirea imaginilor (`__main__.py`, `read.py`)
-- Matplotlib: utilizata pentru redarea si salvarea imaginii QR (`matrToPhoto.py`)
+- Matplotlib: utilizata pentru redarea si salvarea imaginii QR (`matrix_to_photo.py`)
 - Reedsolo: folosita pentru corectia erorilor cu algoritmul Reed-Solomon
+
+Au contribuit la realizarea acestui proiect:
+- Baca Adelic-Ionut (Grupa 132)
+- Popa Radu-Stefan (Grupa 132)
+- Popescu Iulia (Grupa 131)

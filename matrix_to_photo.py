@@ -31,7 +31,7 @@ def encode(message):
     
     return encodedMessage
 
-def encodeRS(encodedMessage):
+def encode_rs(encodedMessage):
     #Convert the binary string to a byte array
     byte_array = bytearray(int(encodedMessage[i:i+8], 2) for i in range(0, len(encodedMessage), 8))
     
@@ -64,7 +64,7 @@ def makeMatrixBeforeMask():
         matrixLenght=21+4*(version-1)
         QRMatrix=[[0*matrixLenght] for i in range(matrixLenght)] #Create a matrix
         
-        encodedMessageRS_str=encodeRS(encodedMessage) #version+lenght+message+end+reeds in binary
+        encodedMessageRS_str=encode_rs(encodedMessage) #version+lenght+message+end+reeds in binary
         QRMatrix=get_matrix_write(QRMatrix) #Prepares the matrix for the placement of the message
         reserved=get_reserved_matrix(QRMatrix) #The places where the message can be placed are marked as False
         
