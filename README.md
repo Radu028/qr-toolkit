@@ -58,6 +58,8 @@ Prin combinarea acestor pasi, proiectul parcurge intregul flux de procesare a un
 
 Prin parcurgerea acestor pasi, proiectul asigura generarea corecta a unui cod QR, de la codarea mesajului initial pana la crearea imaginii finale.
 
+---
+
 Referinte in cadrul proiectului:  
 - Preprocesarea si citirea imaginii: `__main__.py`  
 - Extragerea si pozitionarea matricei QR: `read.py`  
@@ -71,6 +73,16 @@ Librarii folosite in cadrul acestui proiect:
 - OpenCV (cv): folosita pentru citirea imaginilor (`__main__.py`, `read.py`)
 - Matplotlib: utilizata pentru redarea si salvarea imaginii QR (`matrix_to_hoto.py`)
 - Reedsolo: folosita pentru corectia erorilor cu algoritmul Reed-Solomon
+
+---
+
+### Cum se foloseste
+
+1. Se ruleaza fisisrul `__main__.py`
+2. Se introduce **0** pentru citirea codului sau **1** pentru generarea unuia.
+3. Pentru citire se introduce numele fisierului cu imaginea codului QR (cu tot cu extensie .png/.jpg/etc)
+    Pentru generare se introduce mesajul dorit
+4. 
 
 Au contribuit la realizarea acestui proiect:
 - Bâcă Ionut-Adelin (Grupa 132)
