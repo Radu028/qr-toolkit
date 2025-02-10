@@ -3,42 +3,34 @@ import cv2
 from read import *
 from mask import *
 from decode import *
-       
-img = cv2.imread('qr-code.png', cv2.IMREAD_GRAYSCALE)
-height, width = img.shape # dimensions of the image
+from matrix_to_photo import *
 
-_, binary_img = cv2.threshold(img, 127, 255, cv2.THRESH_BINARY)
-# Now binary_img is either 0 (black) or 255 (white)
+action_id = int(input("Enter the action id(0 for reading | 1 for generating): "))
 
-finder_patterns_coords = find_coordonates(binary_img, height, width)
+if action_id == 0:
+    img_name = input("Enter the image name(must be in currect path): ")
 
-qr = positioned_qr(get_qr(binary_img, height, width), binary_img, height, width)
+    img = cv2.imread(img_name, cv2.IMREAD_GRAYSCALE)
+    height, width = img.shape # dimensions of the image
 
-mask_id = get_mask_id(qr)
+    _, binary_img = cv2.threshold(img, 127, 255, cv2.THRESH_BINARY)
+    # Now binary_img is either 0 (black) or 255 (white)
 
-unmasked_qr = remove_mask(qr, mask_id)
-# for line in unmasked_qr:
-#     print(line)
+    finder_patterns_coords = find_coordonates(binary_img, height, width)
 
-encoding_type = get_encoding_type(unmasked_qr)
-# print(encoding_type)
+    qr = positioned_qr(get_qr(binary_img, height, width), binary_img, height, width)
 
-# message_len = get_message_len(unmasked_qr, encoding_type)
-# print(message_len)
+    mask_id = get_mask_id(qr)
 
-correction_level = get_correction_level(unmasked_qr)
-# print(correction_level)
+    unmasked_qr = remove_mask(qr, mask_id)
 
-message = get_message(unmasked_qr, encoding_type, correction_level)
-print(message)
+    encoding_type = get_encoding_type(unmasked_qr)
 
-# This is just testing, if you want to see the print uncomment prints in the function get_matrix_write.
-for i in range(21, 35, 4):
-    qr_test = [[0 for _ in range(i)] for _ in range(i) ]
-    get_matrix_write(qr_test)
+    correction_level = get_correction_level(unmasked_qr)
 
-# Example function call to apply the best mask for a given qr matrix.
-# (mask, qrWithMask) = compute_QR_with_the_best_mask(qr)
-# print("QR  with mask applied for writing ", mask)
-# for line in qrWithMask:
-#     print(line)
+    message = get_message(unmasked_qr, encoding_type, correction_level)
+    print(message)
+elif action_id == 1:
+    message=input("Message: ") #The input that will be made a QR code
+    make_matrix_before_mask(message)
+

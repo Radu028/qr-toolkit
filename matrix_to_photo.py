@@ -46,9 +46,7 @@ def encode_rs(encodedMessage):
     
     return encodedMessageRS_str
 
-def make_matrix_before_mask():
-    global message
-    
+def make_matrix_before_mask(message):
     #Dimensions for the versions of QR(Byte,L)
     qrByteCapacity=[17, 32, 53, 78, 106, 134, 154, 192, 230, 271, 321, 367, 425, 458, 520, 586, 644, 718, 792, 858, 929, 1003, 1091, 1171, 1273, 1367, 1465, 1528, 1628, 1732, 1840, 1952, 2068, 2188, 2303, 2431, 2563, 2699, 2809, 2953]
     encodedMessage=encode(message)
@@ -221,7 +219,3 @@ def make_matrix_before_mask():
         print("The text is longer than the biggest version!")
         print("Reduce the characters of your text... =(")
         return
-
-message=input("Message: ") #The input that will be made a QR code
-
-make_matrix_before_mask()
