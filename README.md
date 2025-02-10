@@ -76,3 +76,12 @@ Au contribuit la realizarea acestui proiect:
 - Bâcă Ionut-Adelin (Grupa 132)
 - Popa Radu-Stefan (Grupa 132)
 - Popescu Iulia-Maria (Grupa 131)
+
+### Bibliografie
+- https://www.nayuki.io/page/creating-a-qr-code-step-by-step
+- https://www.thonky.com/qr-code-tutorial/format-version-information
+- https://medium.com/@r00__/decoding-a-broken-qr-code-39fc3473a034
+- https://www.thonky.com/qr-code-tutorial/data-encoding
+- https://www.thonky.com/qr-code-tutorial/module-placement-matrix
+- https://qr.blinry.org/
+- https://www.thonky.com/qr-code-tutorial/data-analysis
