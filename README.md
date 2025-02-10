@@ -73,6 +73,6 @@ Librarii folosite in cadrul acestui proiect:
 - Reedsolo: folosita pentru corectia erorilor cu algoritmul Reed-Solomon
 
 Au contribuit la realizarea acestui proiect:
-- Baca Adelic-Ionut (Grupa 132)
+- Bâcă Ionut-Adelin (Grupa 132)
 - Popa Radu-Stefan (Grupa 132)
-- Popescu Iulia (Grupa 131)
+- Popescu Iulia-Maria (Grupa 131)
