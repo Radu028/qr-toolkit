@@ -82,9 +82,11 @@ Librarii folosite in cadrul acestui proiect:
 2. Se introduce **0** pentru citirea codului sau **1** pentru generarea unuia.
 3. Pentru citire se introduce numele fisierului cu imaginea codului QR (cu tot cu extensie .png/.jpg/etc)
     Pentru generare se introduce mesajul dorit
-4. 
+4. Pentru generare se introduce numarul de octeti pentru corectie
 
-Au contribuit la realizarea acestui proiect:
+---
+
+Echipa Pheonix a realizat acest proiect:
 - Bâcă Ionut-Adelin (Grupa 132)
 - Popa Radu-Stefan (Grupa 132)
 - Popescu Iulia-Maria (Grupa 131)
@@ -97,3 +99,6 @@ Au contribuit la realizarea acestui proiect:
 - https://www.thonky.com/qr-code-tutorial/module-placement-matrix
 - https://qr.blinry.org/
 - https://www.thonky.com/qr-code-tutorial/data-analysis
+- https://www.youtube.com/watch?v=pamazHwk0hg
+- https://www.youtube.com/watch?v=KMsvtqQqz5g
+- https://www.youtube.com/watch?v=sRgUrKWiXQs
