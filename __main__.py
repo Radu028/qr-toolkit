@@ -8,7 +8,7 @@ from matrix_to_photo import *
 action_id = int(input("Enter the action id(0 for reading | 1 for generating): "))
 
 if action_id == 0:
-    img_name = input("Enter the image name(must be in currect path): ")
+    img_name = input("Enter the image file name(must be in currect path): ")
 
     img = cv2.imread(img_name, cv2.IMREAD_GRAYSCALE)
     height, width = img.shape # dimensions of the image
