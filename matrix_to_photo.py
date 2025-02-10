@@ -204,7 +204,7 @@ def make_matrix_before_mask(message):
         for i in range(len(mask)):
             mask[i]=mask[i]^xor_str[i]
             
-        print(mask)
+        # print(mask)
         for j in range(5):
             QRMatrix[8][j]=mask[j]
             

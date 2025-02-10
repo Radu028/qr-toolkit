@@ -32,7 +32,7 @@ Prin combinarea acestor pasi, proiectul parcurge intregul flux de procesare a un
 ## Generare
 
 1. **Codarea mesajului**
-    Procesul incepe cu functia `encode` din `matrix_to_photo.py`, care primeste mesajul ca input si genereaza un sir binar ce respecta specificatiile QR:
+    Procesul incepe cu functia `encode` din `matrix_to_hoto.py`, care primeste mesajul ca input si genereaza un sir binar ce respecta specificatiile QR:
     - Se adauga indicatorul de mod (pentru modul Byte, se foloseste "0100").
     - Se calculeaza dimensiunea campului de numar de caractere, alegand 8, 16 sau 24 de biti in functie de lungimea mesajului.
     - Fiecarui caracter ii este atribuita forma binara pe 8 biti.
@@ -52,7 +52,7 @@ Prin combinarea acestor pasi, proiectul parcurge intregul flux de procesare a un
     Dupa obtinerea unui sir binar complet (cu codificare initiala si corectie a erorilor) si dupa aplicarea mastii, se construieste o matrice 2D. Fiecare element reprezinta un modul (sau punct), 0 pentru alb si 1 pentru negru. Integrarea zonelor functionale si a semnalelor de orientare se face pe baza specificatiilor QR.
 
 5. **Generarea imaginii QR**
-    Ultimul pas este conversia matricei 2D intr-o imagine. Acest lucru se realizeaza folosind biblioteca `matplotlib` (importata la inceputul `matrix_to_photo.py`). Functiile specifice se ocupa de:
+    Ultimul pas este conversia matricei 2D intr-o imagine. Acest lucru se realizeaza folosind biblioteca `matplotlib` (importata la inceputul `matrix_to_hoto.py`). Functiile specifice se ocupa de:
     - Redarea unui grid vizual, unde modulele au culori contrastante (negru si alb).
     - Salvarea imaginii finale care reprezinta codul QR gata de scanare.
 
@@ -65,11 +65,11 @@ Referinte in cadrul proiectului:
 - Decodarea mesajului: `decode.py`  
 - Corectia erorilor: `correction.py`  
 - Marcare zone rezervate: `utils.py`
-- Generare QR: `matrix_to_photo.py`
+- Generare QR: `matrix_to_hoto.py`
 
 Librarii folosite in cadrul acestui proiect:
 - OpenCV (cv): folosita pentru citirea imaginilor (`__main__.py`, `read.py`)
-- Matplotlib: utilizata pentru redarea si salvarea imaginii QR (`matrix_to_photo.py`)
+- Matplotlib: utilizata pentru redarea si salvarea imaginii QR (`matrix_to_hoto.py`)
 - Reedsolo: folosita pentru corectia erorilor cu algoritmul Reed-Solomon
 
 Au contribuit la realizarea acestui proiect:

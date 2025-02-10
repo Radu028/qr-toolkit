@@ -19,16 +19,13 @@ if action_id == 0:
     finder_patterns_coords = find_coordonates(binary_img, height, width)
 
     qr = positioned_qr(get_qr(binary_img, height, width), binary_img, height, width)
-
     mask_id = get_mask_id(qr)
-
     unmasked_qr = remove_mask(qr, mask_id)
-
+    
     encoding_type = get_encoding_type(unmasked_qr)
-
     correction_level = get_correction_level(unmasked_qr)
-
     message = get_message(unmasked_qr, encoding_type, correction_level)
+
     print(message)
 elif action_id == 1:
     message=input("Message: ") #The input that will be made a QR code

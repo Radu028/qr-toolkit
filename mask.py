@@ -108,7 +108,7 @@ def compute_QR_with_the_best_mask(qr):
         #print ( "Score method4 = ", currentScoreM4, " for mask  ", allMasks[k] )
 
         currentScore = currentScoreM1 + currentScoreM2 + currentScoreM3 + currentScoreM4
-        print ( "Score TOTAL = ", currentScore, " for mask  ", allMasks[k] )
+        # print ( "Score TOTAL = ", currentScore, " for mask  ", allMasks[k] )
         # Todo add the other 3 methods
         if currentScore < lowestScore:
             lowestScore = currentScore
